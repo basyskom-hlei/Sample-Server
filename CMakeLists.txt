@@ -126,6 +126,23 @@ add_library(
 )
 target_link_libraries(ua_gen_woodworking PUBLIC ua_gen_machinery)
 
+ua_generate_nodeset_and_datatypes(
+    NAME "cnc"
+    FILE_CSV "${open62541_NODESET_DIR}/CNC/Opc.Ua.CNC.NodeIds.csv"
+    FILE_NS "${open62541_NODESET_DIR}/CNC/Opc.Ua.CNC.NodeSet.xml"
+    FILE_BSD "${PROJECT_SOURCE_DIR}/model/Opc.Ua.CNC.NodeSet.bsd"
+    OUTPUT_DIR "${PROJECT_SOURCE_DIR}/src_generated"
+    NAMESPACE_MAP "8:http://opcfoundation.org/UA/CNC"
+    DEPENDS machinery
+)
+
+add_library(
+    ua_gen_cnc
+    src_generated/cnc_nodeids.h src_generated/namespace_cnc_generated.c src_generated/types_cnc_generated.c
+    src_generated/types_cnc_generated.h
+)
+target_link_libraries(ua_gen_cnc PUBLIC open62541::open62541)
+
 add_library(
     SampleServerLib
     OpcUaTypes/ConstNodeId.cpp
@@ -151,8 +168,7 @@ target_compile_definitions(SampleServerLib PUBLIC __STDC_WANT_LIB_EXT1__)
 
 add_library(
     Configuration
-    Configuration/Configuration_json.cpp
-    Configuration/Configuration.cpp
+    Configuration/Configuration.cpp Configuration/Configuration_json.cpp
 )
 target_link_libraries(Configuration PRIVATE nlohmann_json::nlohmann_json)
 
@@ -180,7 +196,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC Configuration)
 target_link_libraries(${PROJECT_NAME} PUBLIC ua_gen_machinetool)
 target_link_libraries(${PROJECT_NAME} PUBLIC ua_gen_woodworking)
 target_link_libraries(${PROJECT_NAME} PUBLIC ua_gen_robotics)
-
 
 add_subdirectory(tests)
 include(CTest)
