@@ -22,13 +22,13 @@ void CNShowcaseMachineTool::InstantiateIdentification() {
   InstantiateOptional(mt.Identification->Location, m_pServer, n);
   InstantiateOptional(mt.Identification->Model, m_pServer, n);
 
-  mt.Identification->Manufacturer = {"", "umati China Showcase"};
+  mt.Identification->Manufacturer = {"", "umati China"};
   mt.Identification->ProductCode = "2653837gg1548";
   mt.Identification->YearOfConstruction = 2021;
   mt.Identification->SoftwareRevision = "v1.02.3";
   mt.Identification->DeviceClass = "Machining centre";
   mt.Identification->ProductInstanceUri = "http://amtc.tech";
-  mt.Identification->Location = "CIMT E8 B014/VIRTUAL 0 0/N 31.282196 E 121.212046";
+  mt.Identification->Location = "EMO 7 F28/AMT 1 1/VIRTUAL 0 0/N 31.282196 E 121.212046";
   mt.Identification->Model = {"", MachineName};
 }
 
